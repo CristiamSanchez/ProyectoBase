@@ -1,0 +1,53 @@
+cat > .gitignore <<'EOF'
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Test results
+TestResults/
+**/TestResults/
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Logs
+Logs/
+*.log
+
+# Environment files
+.env
+.env.*
+
+# User-specific configuration
+appsettings.Local.json
+appsettings.*.Local.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+*.snupkg
+
+# Docker
+docker-compose.override.yml
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+EOF
