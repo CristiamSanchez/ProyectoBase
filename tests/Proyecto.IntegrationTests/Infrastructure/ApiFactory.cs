@@ -26,7 +26,7 @@ public class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         await TestDataSeeder.SeedAsync(context);
     }
 
-    public async Task DisposeAsync()
+    public new async Task DisposeAsync()
     {
         await _postgresFixture.DisposeAsync();
     }
