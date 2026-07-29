@@ -8,7 +8,8 @@ using System.Security.Claims;
 namespace Proyecto.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
@@ -37,6 +38,7 @@ public class AuthController : ControllerBase
 
     [HttpGet("me")]
     [Authorize]
+    
     public IActionResult Me()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

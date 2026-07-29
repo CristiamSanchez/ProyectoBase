@@ -20,7 +20,7 @@ public static class AuthTestHelper
         };
 
         var response = await client.PostAsJsonAsync(
-            "/api/Auth/login",
+            "/api/v1/Auth/login",
             loginRequest);
 
         response.EnsureSuccessStatusCode();

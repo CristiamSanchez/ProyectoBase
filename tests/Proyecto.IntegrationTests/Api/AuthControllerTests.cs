@@ -29,7 +29,7 @@ public class AuthControllerTests : IClassFixture<ApiFactory>
 
         // Act
         var response = await _client.PostAsJsonAsync(
-            "/api/Auth/login",
+            "/api/v1/Auth/login",
             request);
 
         // Assert
@@ -50,7 +50,7 @@ public class AuthControllerTests : IClassFixture<ApiFactory>
 
         // Act
         var response = await _client.PostAsJsonAsync(
-            "/api/Auth/login",
+            "/api/v1/Auth/login",
             request);
 
         // Assert
@@ -88,7 +88,7 @@ public class AuthControllerTests : IClassFixture<ApiFactory>
 
         // Act
         var response = await _client.PostAsJsonAsync(
-            "/api/Auth/login",
+            "/api/v1/Auth/login",
             request);
 
         // Assert
@@ -152,7 +152,7 @@ public class AuthControllerTests : IClassFixture<ApiFactory>
     public async Task Me_SinToken_DebeRetornarUnauthorized()
     {
         var response = await _client.GetAsync(
-            "/api/Auth/me");
+            "/api/v1/Auth/me");
 
         response.StatusCode
             .Should()

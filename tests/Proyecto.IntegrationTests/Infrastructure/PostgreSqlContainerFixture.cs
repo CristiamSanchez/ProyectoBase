@@ -1,3 +1,4 @@
+
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,8 @@ public class PostgreSqlContainerFixture : IAsyncLifetime
             .WithPortBinding(5432, true)
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
-                    .UntilMessageIsLogged("database system is ready to accept connections"))
+                    .UntilMessageIsLogged(
+                        "database system is ready to accept connections"))
             .Build();
     }
 
@@ -37,6 +39,13 @@ public class PostgreSqlContainerFixture : IAsyncLifetime
             $"Username=postgres;" +
             $"Password=postgres;" +
             $"Pooling=false;";
+    }
+
+    public async Task ApplyMigrationsAsync()
+    {
+        await using var context = CreateDbContext();
+
+        await context.Database.MigrateAsync();
     }
 
     public async Task DisposeAsync()
@@ -56,4 +65,3 @@ public class PostgreSqlContainerFixture : IAsyncLifetime
         return new AppDbContext(options);
     }
 }
-
