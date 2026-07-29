@@ -1,7 +1,7 @@
-
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Proyecto.Infrastructure.Data;
 
 namespace Proyecto.IntegrationTests.Infrastructure;
@@ -39,6 +39,35 @@ public class PostgreSqlContainerFixture : IAsyncLifetime
             $"Username=postgres;" +
             $"Password=postgres;" +
             $"Pooling=false;";
+
+        await WaitForDatabaseAsync();
+    }
+
+    private async Task WaitForDatabaseAsync()
+    {
+        const int maxAttempts = 30;
+
+        for (var attempt = 1; attempt <= maxAttempts; attempt++)
+        {
+            try
+            {
+                await using var connection =
+                    new NpgsqlConnection(ConnectionString);
+
+                await connection.OpenAsync();
+
+                await connection.CloseAsync();
+
+                return;
+            }
+            catch (NpgsqlException) when (attempt < maxAttempts)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
+        }
+
+        throw new InvalidOperationException(
+            "PostgreSQL no estuvo disponible después de 30 intentos.");
     }
 
     public async Task ApplyMigrationsAsync()
